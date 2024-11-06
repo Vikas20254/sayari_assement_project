@@ -64,7 +64,7 @@ The generated graph will display:
 ## Example Output
 
 - **CSV Files**:
-  - `company_data.csv`: Initial company data.
+  - `company_data.csv`: Company names that starts with 'X'
   - `final_company_data.csv`: Enhanced company data including agent information.
 - **Graph**: A network graph illustrating relationships between businesses and agents.
 
