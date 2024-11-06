@@ -3,6 +3,9 @@ import json
 import pandas as pd
 import requests
 import time
+import networkx as nx
+import matplotlib.pyplot as plt
+from networkx.algorithms.community import girvan_newman
 
 class BusinessSpider(scrapy.Spider):
     name = "north_dakota_business_data_crawling"
@@ -141,7 +144,7 @@ class BusinessSpider(scrapy.Spider):
             "Principal Address": "principal_address",
             "Mailing Address": "mailing_address",
             "AR Due Date": "ar_due_date",
-            "Registered Agent": "registered_agent",
+            "registered_agent": "registered_agent",
             "Commercial Registered Agent": "commercial_registered_agent",
             "Owner Name": "owner_name"
         }
@@ -169,7 +172,7 @@ class BusinessSpider(scrapy.Spider):
                     
                     # Process address fields to remove newline characters
                     if label in required_columns:
-                        if "Address" in label or "Registered Agent" in label:
+                        if "Address" in label or "registered_agent" in label:
                             value = value.replace("\n", ", ")  # Replace \n with comma and space
                         row_data[required_columns[label]] = value
 
@@ -187,12 +190,50 @@ class BusinessSpider(scrapy.Spider):
 
         # Convert the final list of rows into a DataFrame and save to CSV
         final_df = pd.DataFrame(rows)
-        final_df.to_csv('final_company_data.csv', index=False)
     # Replace "unknown" with NaN, then backfill to get first valid value
-        final_df['primary_agent'] = final_df[['owner_name', 'Registered Agent', 'commercial_registered_agent']].replace("unknown", pd.NA).bfill(axis=1).iloc[:, 0]
+        final_df['primary_agent'] = final_df[['owner_name', 'registered_agent', 'commercial_registered_agent']].replace("unknown", pd.NA).bfill(axis=1).iloc[:, 0]
 
 
      # Replace NaN in primary_agent with "No Agent Info"
         final_df['primary_agent'].fillna("No Agent Info", inplace=True)
+        final_df.to_csv('final_company_data.csv', index=False)
 
-        final_df.to_csv('company_data_processed.csv')
+
+        # Create the graph
+        G = nx.Graph()
+        for _, row in final_df.iterrows():
+            G.add_node(row['company_name'], type='company')
+            G.add_node(row['primary_agent'], type='agent')
+            G.add_edge(row['company_name'], row['primary_agent'])
+
+
+        # Community detection for coloring
+        communities = next(girvan_newman(G))
+
+
+        # Define color and size mapping based on node attributes
+        color_map = []
+        size_map = []
+        for node in G:
+            color = "lightblue" if node in communities[0] else "orange"
+            color_map.append(color)
+            
+            # Increase node size for more connected nodes
+            size_map.append(200 + G.degree[node] * 100)
+
+
+        # Increase layout spacing and iterations
+        pos = nx.spring_layout(G, k=0.8, iterations=100)  # Increased k for more spacing
+
+
+        # Draw the graph with customized spacing and clarity
+        plt.figure(figsize=(18, 18))  # Larger figure size for clarity
+        nx.draw(
+        G, pos, with_labels=True, node_color=color_map, node_size=size_map,
+        font_size=8, font_weight="bold", edge_color="gray", font_color="black"
+        )
+        plt.title("Enhanced Company-Primary Agent Network Graph with Increased Spacing")
+        plt.show()
+
+
+
