@@ -1,0 +1,6 @@
+selenium
+requests
+networkx
+matplotlib
+pandas
+pygraphviz
