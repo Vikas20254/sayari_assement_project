@@ -20,4 +20,4 @@ This project is a web scraping tool that extracts business data from the North D
 
 ## Visualization / Result
 
-![North Dakota Business Data Visualization](https://raw.githubusercontent.com/Vikas20254/sayari_assement_project/main/figure.png)
+![North Dakota Business Data Visualization](figure.png)
