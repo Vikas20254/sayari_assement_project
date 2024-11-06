@@ -3,7 +3,7 @@
 
 ## Overview
 
-This project is a web scraping tool that extracts business data from the North Dakota FirstStop SOS website, processes the data, and generates a graph to visualize relationships between companies and their primary agents. The scraping script is built using the `scrapy` framework, while the data visualization is done using `NetworkX` and `matplotlib`.
+This project is a web scraping tool that extracts business data from the North Dakota FirstStop SOS website, processes the data, and generates a graph to visualize relationships between companies and their primary agents. The scraping script is built using the `selenium`, while the data visualization is done using `networkx` and `matplotlib`.
 
 ## Features
 

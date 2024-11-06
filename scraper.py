@@ -45,5 +45,5 @@ for j, row in enumerate(rows):
         data_dict[missed].append(np.nan)
 
 df = pd.DataFrame.from_dict(data_dict)
-df.to_csv('company_data_new.json', index=False)
+df.to_csv('company_data.csv', index=False)
 driver.quit()
