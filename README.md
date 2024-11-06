@@ -28,7 +28,7 @@ pip install scrapy pandas requests networkx matplotlib
 1. **Run the Spider**: To start the scraping process, run the following command in your terminal:
     
     ```sh
-    scrapy runspider business_spider.py
+    scrapy crawl north_dakota_business_data_crawling
     ```
     
     This will initiate requests to the North Dakota FirstStop SOS website and start extracting business data.
