@@ -68,10 +68,4 @@ The generated graph will display:
   - `final_company_data.csv`: Enhanced company data including agent information.
 - **Graph**: A network graph illustrating relationships between businesses and agents.
 
-## License
 
-This project is licensed under the MIT License.
-
-## Disclaimer
-
-This script is for educational purposes only. Ensure that web scraping complies with the site's `robots.txt` file and terms of service.
