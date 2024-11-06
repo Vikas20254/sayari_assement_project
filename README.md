@@ -67,7 +67,7 @@ The generated graph will display:
   - `company_data.csv`: Company names that starts with 'X'
   - `final_company_data.csv`: Enhanced company data including agent information.
 - **Graph**: A network graph illustrating relationships between businesses and agents.
-- ![Alt text](relative/path/to/image.png)
+- ![Alt text](Network_graph.png)
 
 
 
